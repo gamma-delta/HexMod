@@ -5,6 +5,7 @@ import at.petrak.hexcasting.api.spell.*
 import at.petrak.hexcasting.api.spell.casting.CastingContext
 import at.petrak.hexcasting.api.spell.iota.Iota
 import at.petrak.hexcasting.ktxt.UseOnContext
+import at.petrak.hexcasting.xplat.IXplatAbstractions
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
@@ -55,53 +56,56 @@ object OpExtinguish : SpellAction {
                 ) {
                     // never seen this pos in my life
                     val blockstate = ctx.world.getBlockState(here)
-                    val success =
-                        when (blockstate.block) {
-                            is BaseFireBlock -> {
-                                ctx.world.setBlock(here, Blocks.AIR.defaultBlockState(), 3); true
+                    if (IXplatAbstractions.INSTANCE.isBreakingAllowed(ctx.world, here, blockstate, ctx.caster)) {
+                        val success =
+                            when (blockstate.block) {
+                                is BaseFireBlock -> {
+                                    ctx.world.setBlock(here, Blocks.AIR.defaultBlockState(), 3); true
+                                }
+                                is CampfireBlock -> {
+                                    if (blockstate.getValue(CampfireBlock.LIT)) { // check if campfire is lit before putting it out
+                                        val wilson =
+                                            Items.WOODEN_SHOVEL // summon shovel from the ether to do our bidding
+                                        val hereVec = Vec3.atCenterOf(here)
+                                        wilson.useOn(
+                                            UseOnContext(
+                                                ctx.world,
+                                                null,
+                                                InteractionHand.MAIN_HAND,
+                                                ItemStack(wilson),
+                                                BlockHitResult(hereVec, Direction.UP, here, false)
+                                            )
+                                        ); true
+                                    } else false
+                                }
+                                is AbstractCandleBlock -> {
+                                    if (blockstate.getValue(AbstractCandleBlock.LIT)) { // same check for candles
+                                        AbstractCandleBlock.extinguish(null, blockstate, ctx.world, here); true
+                                    } else false
+                                }
+                                is NetherPortalBlock -> {
+                                    ctx.world.setBlock(here, Blocks.AIR.defaultBlockState(), 3); true
+                                }
+                                else -> false
                             }
-                            is CampfireBlock -> {
-                                if (blockstate.getValue(CampfireBlock.LIT)) { // check if campfire is lit before putting it out
-                                    val wilson = Items.WOODEN_SHOVEL // summon shovel from the ether to do our bidding
-                                    val hereVec = Vec3.atCenterOf(here)
-                                    wilson.useOn(
-                                        UseOnContext(
-                                            ctx.world,
-                                            null,
-                                            InteractionHand.MAIN_HAND,
-                                            ItemStack(wilson),
-                                            BlockHitResult(hereVec, Direction.UP, here, false)
-                                        )
-                                    ); true
-                                } else false
-                            }
-                            is AbstractCandleBlock -> {
-                                if (blockstate.getValue(AbstractCandleBlock.LIT)) { // same check for candles
-                                    AbstractCandleBlock.extinguish(null, blockstate, ctx.world, here); true
-                                } else false
-                            }
-                            is NetherPortalBlock -> {
-                                ctx.world.setBlock(here, Blocks.AIR.defaultBlockState(), 3); true
-                            }
-                            else -> false
-                        }
 
-                    if (success) {
-                        ctx.world.sendParticles(
-                            ParticleTypes.SMOKE,
-                            here.x + 0.5 + Math.random() * 0.4 - 0.2,
-                            here.y + 0.5 + Math.random() * 0.4 - 0.2,
-                            here.z + 0.5 + Math.random() * 0.4 - 0.2,
-                            2,
-                            0.0,
-                            0.05,
-                            0.0,
-                            0.0
-                        )
-                        successes++
-                    }
-                    for (dir in Direction.values()) {
-                        todo.add(here.relative(dir))
+                        if (success) {
+                            ctx.world.sendParticles(
+                                ParticleTypes.SMOKE,
+                                here.x + 0.5 + Math.random() * 0.4 - 0.2,
+                                here.y + 0.5 + Math.random() * 0.4 - 0.2,
+                                here.z + 0.5 + Math.random() * 0.4 - 0.2,
+                                2,
+                                0.0,
+                                0.05,
+                                0.0,
+                                0.0
+                            )
+                            successes++
+                        }
+                        for (dir in Direction.values()) {
+                            todo.add(here.relative(dir))
+                        }
                     }
                 }
             }

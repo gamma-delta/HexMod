@@ -9,6 +9,7 @@ import at.petrak.hexcasting.api.spell.getBlockPos
 import at.petrak.hexcasting.api.spell.iota.Iota
 import at.petrak.hexcasting.api.spell.mishaps.MishapBadBlock
 import at.petrak.hexcasting.common.misc.AkashicTreeGrower
+import at.petrak.hexcasting.xplat.IXplatAbstractions
 import net.minecraft.core.BlockPos
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.phys.Vec3
@@ -34,7 +35,9 @@ object OpEdifySapling : SpellAction {
 
     private data class Spell(val pos: BlockPos) : RenderedSpell {
         override fun cast(ctx: CastingContext) {
-            if (!ctx.world.mayInteract(ctx.caster, pos))
+            val blockstate = ctx.world.getBlockState(pos)
+            if (!ctx.world.mayInteract(ctx.caster, pos) ||
+                !IXplatAbstractions.INSTANCE.isBreakingAllowed(ctx.world, pos, blockstate, ctx.caster))
                 return
 
             val bs = ctx.world.getBlockState(pos)

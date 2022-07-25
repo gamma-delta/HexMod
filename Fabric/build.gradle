@@ -97,7 +97,7 @@ tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
 }
 compileKotlin {
-    source(project(":Common").sourceSets.main.allSource)
+    source(project(":Common").sourceSets.main.kotlin)
 }
 
 sourcesJar {
