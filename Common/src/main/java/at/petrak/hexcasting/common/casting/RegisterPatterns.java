@@ -20,8 +20,8 @@ import at.petrak.hexcasting.common.casting.operators.eval.OpEval;
 import at.petrak.hexcasting.common.casting.operators.eval.OpForEach;
 import at.petrak.hexcasting.common.casting.operators.eval.OpHalt;
 import at.petrak.hexcasting.common.casting.operators.lists.*;
-import at.petrak.hexcasting.common.casting.operators.local.OpPeekLocal;
-import at.petrak.hexcasting.common.casting.operators.local.OpPushLocal;
+import at.petrak.hexcasting.common.casting.operators.ravenmind.OpPeekRavenmind;
+import at.petrak.hexcasting.common.casting.operators.ravenmind.OpPushRavenmind;
 import at.petrak.hexcasting.common.casting.operators.math.*;
 import at.petrak.hexcasting.common.casting.operators.math.bit.*;
 import at.petrak.hexcasting.common.casting.operators.math.logic.*;
@@ -342,9 +342,9 @@ public class RegisterPatterns {
                 modLoc("readable/entity"), OpTheCoolerReadable.INSTANCE);
 
             PatternRegistry.mapPattern(HexPattern.fromAngles("qeewdweddw", HexDir.NORTH_EAST),
-                modLoc("read/local"), OpPeekLocal.INSTANCE);
+                modLoc("read/ravenmind"), OpPeekRavenmind.INSTANCE);
             PatternRegistry.mapPattern(HexPattern.fromAngles("eqqwawqaaw", HexDir.NORTH_WEST),
-                modLoc("write/local"), OpPushLocal.INSTANCE);
+                modLoc("write/ravenmind"), OpPushRavenmind.INSTANCE);
 
             // == Consts ==
 
