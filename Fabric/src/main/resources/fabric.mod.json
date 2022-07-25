@@ -66,6 +66,7 @@
       "hexcasting:flight",
       "hexcasting:harness",
       "hexcasting:patterns",
+      "hexcasting:gravity",
 
       "hexcasting:colorizer",
       "hexcasting:data_holder",

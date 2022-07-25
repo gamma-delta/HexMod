@@ -5,6 +5,7 @@ import at.petrak.hexcasting.api.addldata.DataHolder;
 import at.petrak.hexcasting.api.addldata.HexHolder;
 import at.petrak.hexcasting.api.addldata.ManaHolder;
 import at.petrak.hexcasting.api.misc.FrozenColorizer;
+import at.petrak.hexcasting.api.misc.GravitySetting;
 import at.petrak.hexcasting.api.player.FlightAbility;
 import at.petrak.hexcasting.api.player.Sentinel;
 import at.petrak.hexcasting.api.spell.casting.CastingHarness;
@@ -17,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -101,6 +103,11 @@ public interface IXplatAbstractions {
 
     @Nullable
     HexHolder findHexHolder(ItemStack stack);
+
+    GravitySetting getGravitySetting(Entity entity);
+
+    void setGravitySetting(Entity entity, GravitySetting gravity);
+
 
     // coooollooorrrs
 

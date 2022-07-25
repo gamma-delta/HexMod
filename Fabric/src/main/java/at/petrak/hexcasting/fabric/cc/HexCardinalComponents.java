@@ -15,6 +15,7 @@ import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import dev.onyxstudios.cca.api.v3.item.ItemComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.item.ItemComponentInitializer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Items;
 
@@ -30,6 +31,8 @@ public class HexCardinalComponents implements EntityComponentInitializer, ItemCo
         CCSentinel.class);
     public static final ComponentKey<CCFlight> FLIGHT = ComponentRegistry.getOrCreate(modLoc("flight"),
         CCFlight.class);
+    public static final ComponentKey<CCGravity> GRAVITY = ComponentRegistry.getOrCreate(modLoc("gravity"),
+            CCGravity.class);
     public static final ComponentKey<CCHarness> HARNESS = ComponentRegistry.getOrCreate(modLoc("harness"),
         CCHarness.class);
     public static final ComponentKey<CCPatterns> PATTERNS = ComponentRegistry.getOrCreate(modLoc("patterns"),
@@ -53,6 +56,7 @@ public class HexCardinalComponents implements EntityComponentInitializer, ItemCo
         registry.registerFor(ServerPlayer.class, FLIGHT, CCFlight::new);
         registry.registerFor(ServerPlayer.class, HARNESS, CCHarness::new);
         registry.registerFor(ServerPlayer.class, PATTERNS, CCPatterns::new);
+        registry.registerFor(Entity.class, GRAVITY, CCGravity::new);
     }
 
     @Override

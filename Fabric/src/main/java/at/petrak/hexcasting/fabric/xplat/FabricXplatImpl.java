@@ -4,6 +4,7 @@ import at.petrak.hexcasting.api.addldata.DataHolder;
 import at.petrak.hexcasting.api.addldata.HexHolder;
 import at.petrak.hexcasting.api.addldata.ManaHolder;
 import at.petrak.hexcasting.api.misc.FrozenColorizer;
+import at.petrak.hexcasting.api.misc.GravitySetting;
 import at.petrak.hexcasting.api.mod.HexConfig;
 import at.petrak.hexcasting.api.mod.HexItemTags;
 import at.petrak.hexcasting.api.player.FlightAbility;
@@ -153,7 +154,17 @@ public class FabricXplatImpl implements IXplatAbstractions {
         var cc = HexCardinalComponents.FLIGHT.get(target);
         cc.setFlight(flight);
     }
-
+    @Override
+    public GravitySetting getGravitySetting(Entity target)
+    {
+        var cc = HexCardinalComponents.GRAVITY.get(target);
+        return cc.getGravitySetting();
+    }
+    @Override
+    public void setGravitySetting(Entity target, GravitySetting gravity) {
+        var cc = HexCardinalComponents.GRAVITY.get(target);
+        cc.setGravitySetting(gravity);
+    }
     @Override
     public void setHarness(ServerPlayer target, CastingHarness harness) {
         var cc = HexCardinalComponents.HARNESS.get(target);

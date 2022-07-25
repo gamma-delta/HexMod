@@ -17,11 +17,16 @@ interface SpellOperator : Operator {
         ctx: CastingContext
     ): Triple<RenderedSpell, Int, List<ParticleSpray>>?
 
-    override fun operate(continuation: SpellContinuation, stack: MutableList<SpellDatum<*>>, local: SpellDatum<*>, ctx: CastingContext): OperationResult {
+    fun consumeFromStack(stack: MutableList<SpellDatum<*>>, ctx: CastingContext): List<SpellDatum<*>>
+    {
         if (this.argc > stack.size)
             throw MishapNotEnoughArgs(this.argc, stack.size)
         val args = stack.takeLast(this.argc)
         for (_i in 0 until this.argc) stack.removeLast()
+        return args
+    }
+    override fun operate(continuation: SpellContinuation, stack: MutableList<SpellDatum<*>>, local: SpellDatum<*>, ctx: CastingContext): OperationResult {
+        val args = consumeFromStack(stack, ctx)
         val executeResult = this.execute(args, ctx) ?: return OperationResult(continuation, stack, local, listOf())
         val (spell, mana, particles) = executeResult
 

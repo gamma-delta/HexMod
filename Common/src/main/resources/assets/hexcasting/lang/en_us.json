@@ -987,9 +987,10 @@
   "hexcasting.page.interop.3": "Finally, if I find myself interested in the lore and stories of this world, I do not think any notes compiled while examining these interoperations should be considered as anything more than light trifles.",
 
   "hexcasting.entry.interop.gravity": "Gravity Changer",
-  "hexcasting.page.interop.gravity.1": "I have discovered actions to get and set an entity's gravity. I find them interesting, if slightly nauseating.$(br2)Interestingly, although $(l:patterns/great_spells/flight)$(action)Flight/$ is a great spell, and manipulates gravity similarly, these are not. It baffles me why... Perhaps the mod developer wanted players to have fun, for once.",
+  "hexcasting.page.interop.gravity.1": "I have discovered actions to get and set an entity's gravity. I find them interesting, if slightly nauseating.$(br2)Interestingly, although $(l:patterns/great_spells/flight)$(action)Flight/$ is a great spell, and manipulates gravity similarly, these are not. It baffles me why... Perhaps the mod developer wanted players to have fun, for once.  Even stranger, the spell to set gravity accepts different arguments depending on whether I target myself, or others.",
   "hexcasting.page.interop.gravity.get": "Get the main direction gravity pulls the given entity in, as a unit vector. For most entities, this will be down: [0, -1, 0].",
-  "hexcasting.page.interop.gravity.set": "Set the main direction gravity pulls the given entity in. The given vector will be coerced into the nearest axis, as per $(l:patterns/math#hexcasting:coerce_axial)$(action)Axial Purification/$. Costs about 1 $(item)Charged Amethyst Crystal/$.",
+  "hexcasting.page.interop.gravity.set_self": "Set the main direction gravity pulls myself in. The given vector will be coerced into the nearest axis, as per $(l:patterns/math#hexcasting:coerce_axial)$(action)Axial Purification/$. Costs about 1 $(item)Charged Amethyst Crystal/$.",
+  "hexcasting.page.interop.gravity.set_others": "Set the main direction gravity pulls another entity in. The given vector will be coerced into the nearest axis, while the given number determines duration. Costs about 1 $(item)Amethyst Dust/$ for every five seconds.",
 
   "hexcasting.entry.interop.pehkui": "Pehkui",
   "hexcasting.page.interop.pehkui.1": "I have discovered methods of changing the size of entities, and querying how much larger or smaller they are than normal.",
