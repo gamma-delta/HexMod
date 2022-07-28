@@ -6,12 +6,14 @@ import at.petrak.hexcasting.api.mod.HexStatistics
 import at.petrak.hexcasting.common.blocks.behavior.HexComposting
 import at.petrak.hexcasting.common.blocks.behavior.HexStrippables
 import at.petrak.hexcasting.common.casting.RegisterPatterns
+import at.petrak.hexcasting.common.casting.operators.spells.great.OpFlight
 import at.petrak.hexcasting.common.command.PatternResLocArgument
 import at.petrak.hexcasting.common.entities.HexEntities
 import at.petrak.hexcasting.common.items.ItemJewelerHammer
 import at.petrak.hexcasting.common.items.ItemLens
 import at.petrak.hexcasting.common.lib.*
 import at.petrak.hexcasting.common.loot.HexLootHandler
+import at.petrak.hexcasting.common.misc.AkashicTreeGrower
 import at.petrak.hexcasting.common.misc.Brainsweeping
 import at.petrak.hexcasting.common.misc.PlayerPositionRecorder
 import at.petrak.hexcasting.common.recipe.HexRecipeSerializers
@@ -74,6 +76,7 @@ object FabricHexInitializer : ModInitializer {
 
         ServerTickEvents.END_WORLD_TICK.register(PlayerPositionRecorder::updateAllPlayers)
         ServerTickEvents.END_WORLD_TICK.register(ItemLens::tickAllPlayers)
+        ServerTickEvents.END_WORLD_TICK.register(OpFlight::tickAllPlayers)
 
         CommandRegistrationCallback.EVENT.register { dp, _ -> HexCommands.register(dp) }
 
@@ -98,6 +101,11 @@ object FabricHexInitializer : ModInitializer {
         HexParticles.registerParticles(bind(Registry.PARTICLE_TYPE))
 
         HexLootFunctions.registerSerializers(bind(Registry.LOOT_FUNCTION_TYPE))
+
+        // Because of Java's lazy-loading of classes, can't use Kotlin static initialization for
+        // any calls that will eventually touch FeatureUtils.register(), as the growers here do,
+        // unless the class is called in this initialization step.
+        AkashicTreeGrower.init()
 
         // Done with soft implements in forge
         val flameOn = FlammableBlockRegistry.getDefaultInstance()

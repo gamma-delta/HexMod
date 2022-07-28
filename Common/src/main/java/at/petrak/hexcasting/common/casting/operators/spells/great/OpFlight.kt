@@ -5,6 +5,7 @@ import at.petrak.hexcasting.api.player.FlightAbility
 import at.petrak.hexcasting.api.spell.*
 import at.petrak.hexcasting.api.spell.casting.CastingContext
 import at.petrak.hexcasting.xplat.IXplatAbstractions
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.phys.Vec3
@@ -96,5 +97,11 @@ object OpFlight : SpellOperator {
             }
         }
 
+    }
+
+    fun tickAllPlayers(world: ServerLevel) {
+        for (player in world.players()) {
+            tickDownFlight(player)
+        }
     }
 }

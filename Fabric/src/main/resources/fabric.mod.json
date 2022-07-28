@@ -49,7 +49,7 @@
     "minecraft": "=1.18.2",
     "java": ">=17",
     "fabric-language-kotlin": ">=1.7.4+kotlin.1.6.21",
-    "cardinal-components": "~4.1.4",
+    "cardinal-components": ">=4.1.4",
     "patchouli": ">=1.18.2-69",
     "paucal": "~0.4.6"
   },
